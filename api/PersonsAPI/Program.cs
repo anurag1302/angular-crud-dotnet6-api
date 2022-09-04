@@ -20,6 +20,17 @@ namespace PersonsAPI
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -31,6 +42,7 @@ namespace PersonsAPI
 
             app.UseHttpsRedirection();
 
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
             app.MapControllers();
