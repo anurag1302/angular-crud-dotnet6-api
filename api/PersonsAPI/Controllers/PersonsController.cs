@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PersonsAPI.Data;
-using PersonsAPI.Entities;
+using PersonsAPI.Mappers;
 using PersonsAPI.Models;
 using System.Net;
 
@@ -20,11 +20,16 @@ namespace PersonsAPI.Controllers
 
         [HttpGet]
         [Route("GetAllPersons")]
-        public async Task<BaseApiResponse<IReadOnlyList<Person>>> GetAllPersons()
+        public async Task<BaseApiResponse<IReadOnlyList<PersonAPIModel>>> GetAllPersons()
         {
-            var response = new BaseApiResponse<IReadOnlyList<Person>>
+            var persons = await _context.Persons.ToListAsync();
+            var model = persons
+                .Select(x => PersonMapper.From(x))
+                .ToList();
+
+            var response = new BaseApiResponse<IReadOnlyList<PersonAPIModel>>
             {
-                Data = await _context.Persons.ToListAsync(),
+                Data = model,
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.OK,
                 Message = "Success",
@@ -36,14 +41,14 @@ namespace PersonsAPI.Controllers
 
         [HttpGet]
         [Route("GetPersonById/{id}")]
-        public async Task<BaseApiResponse<Person>> GetPersonById(Guid id)
+        public async Task<BaseApiResponse<PersonAPIModel>> GetPersonById(Guid id)
         {
             var person = await _context.Persons
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (person == null)
             {
-                return new BaseApiResponse<Person>()
+                return new BaseApiResponse<PersonAPIModel>()
                 {
                     Data = null,
                     IsSuccess = false,
@@ -53,9 +58,9 @@ namespace PersonsAPI.Controllers
                 };
             }
 
-            var response = new BaseApiResponse<Person>
+            var response = new BaseApiResponse<PersonAPIModel>
             {
-                Data = person,
+                Data = PersonMapper.From(person),
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.OK,
                 Message = "Success",
@@ -67,14 +72,14 @@ namespace PersonsAPI.Controllers
 
         [HttpPost]
         [Route("CreatePerson")]
-        public async Task<BaseApiResponse<Person>> CreatePerson([FromBody] Person person)
+        public async Task<BaseApiResponse<PersonAPIModel>> CreatePerson([FromBody] PersonAPIModel person)
         {
             var model = await _context.Persons
                 .FirstOrDefaultAsync(x => x.Email == person.Email);
 
             if (model != null)
             {
-                return new BaseApiResponse<Person>()
+                return new BaseApiResponse<PersonAPIModel>()
                 {
                     Data = null,
                     IsSuccess = false,
@@ -83,9 +88,10 @@ namespace PersonsAPI.Controllers
                     Message = "Person already exists"
                 };
             }
-            _context.Persons.Add(person);
+            _context.Persons.Add(PersonMapper.To(person));
             await _context.SaveChangesAsync();
-            return new BaseApiResponse<Person>()
+
+            return new BaseApiResponse<PersonAPIModel>()
             {
                 Data = person,
                 IsSuccess = true,
@@ -97,14 +103,14 @@ namespace PersonsAPI.Controllers
 
         [HttpPut]
         [Route("UpdatePerson")]
-        public async Task<BaseApiResponse<Person>> UpdatePerson([FromBody] Person person)
+        public async Task<BaseApiResponse<PersonAPIModel>> UpdatePerson([FromBody] PersonAPIModel person)
         {
             var model = await _context.Persons
                 .FirstOrDefaultAsync(x => x.Id == person.Id);
 
             if (model == null)
             {
-                return new BaseApiResponse<Person>()
+                return new BaseApiResponse<PersonAPIModel>()
                 {
                     Data = null,
                     IsSuccess = false,
@@ -124,9 +130,9 @@ namespace PersonsAPI.Controllers
             _context.Persons.Update(model);
             await _context.SaveChangesAsync();
 
-            return new BaseApiResponse<Person>()
+            return new BaseApiResponse<PersonAPIModel>()
             {
-                Data = model,
+                Data = PersonMapper.From(model),
                 IsSuccess = true,
                 Errors = null,
                 StatusCode = HttpStatusCode.OK,
@@ -136,14 +142,14 @@ namespace PersonsAPI.Controllers
 
         [HttpDelete]
         [Route("DeletePerson")]
-        public async Task<BaseApiResponse<Person>> DeletePerson([FromBody] Guid id)
+        public async Task<BaseApiResponse<PersonAPIModel>> DeletePerson([FromBody] Guid id)
         {
             var model = await _context.Persons
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (model == null)
             {
-                return new BaseApiResponse<Person>()
+                return new BaseApiResponse<PersonAPIModel>()
                 {
                     Data = null,
                     IsSuccess = false,
@@ -156,7 +162,7 @@ namespace PersonsAPI.Controllers
             _context.Persons.Remove(model);
             await _context.SaveChangesAsync();
 
-            return new BaseApiResponse<Person>()
+            return new BaseApiResponse<PersonAPIModel>()
             {
                 Data = null,
                 IsSuccess = true,
