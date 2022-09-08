@@ -5,11 +5,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EditPersonComponent } from './edit-person/edit-person.component';
-import { ListEmployeeComponent } from './list-employee/list-employee.component';
+import { ListPersonComponent } from './list-person/list-person.component';
+import { CreatePersonComponent } from './create-person/create-person.component';
+import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, EditPersonComponent, ListEmployeeComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    EditPersonComponent,
+    ListPersonComponent,
+    CreatePersonComponent,
+    HomeComponent,
+  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

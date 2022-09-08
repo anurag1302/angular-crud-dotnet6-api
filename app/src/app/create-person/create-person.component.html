@@ -1,0 +1,73 @@
+<div class="container mt-3">
+  <h2 class="mt-3 text-center">
+    <u> Add a Person </u>
+  </h2>
+  <form class="row g-3" #form="ngForm" (ngSubmit)="addAPerson()">
+    <div class="col-md-4">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        [(ngModel)]="addPersonRequest.name"
+      />
+    </div>
+    <div class="col-md-4">
+      <label for="phone" class="form-label">Phone</label>
+      <input
+        type="text"
+        class="form-control"
+        id="phone"
+        name="phone"
+        [(ngModel)]="addPersonRequest.phone"
+      />
+    </div>
+    <div class="col-md-4">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        [(ngModel)]="addPersonRequest.email"
+      />
+    </div>
+    <div class="col-12">
+      <label for="address" class="form-label">Address</label>
+      <input
+        type="text"
+        class="form-control"
+        id="address"
+        placeholder="1234 Main St"
+        name="address"
+        [(ngModel)]="addPersonRequest.address"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="postalZip" class="form-label">Postal Zip</label>
+      <input
+        type="text"
+        class="form-control"
+        id="postalZip"
+        placeholder="110045"
+        name="postalZip"
+        [(ngModel)]="addPersonRequest.postalZip"
+      />
+    </div>
+    <div class="col-md-6">
+      <label for="country" class="form-label">Country</label>
+      <input
+        type="text"
+        class="form-control"
+        id="country"
+        name="country"
+        [(ngModel)]="addPersonRequest.country"
+      />
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
