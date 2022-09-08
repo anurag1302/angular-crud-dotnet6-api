@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from 'src/models/person';
 import { PersonService } from 'src/services/person.service';
 
@@ -20,7 +20,8 @@ export class EditPersonComponent implements OnInit {
   };
   constructor(
     private routeMap: ActivatedRoute,
-    private personService: PersonService
+    private personService: PersonService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +38,28 @@ export class EditPersonComponent implements OnInit {
             },
           });
         }
+      },
+      error: (xhr) => {
+        console.log(xhr);
+      },
+    });
+  }
+
+  editAPerson() {
+    this.personService.editAPerson(this.existingPerson).subscribe({
+      next: (response) => {
+        this.router.navigate(['list']);
+      },
+      error: (xhr) => {
+        console.log(xhr);
+      },
+    });
+  }
+
+  deletePerson(id: string) {
+    this.personService.deleteAPerson(id).subscribe({
+      next: (response) => {
+        this.router.navigate(['list']);
       },
       error: (xhr) => {
         console.log(xhr);

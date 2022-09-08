@@ -25,4 +25,14 @@ export class PersonService {
     let url = `${this.BASE_URL}CreatePerson`;
     return this.http.post<ApiResponse>(url, addPersonRequest);
   }
+
+  editAPerson(editPersonRequest: Person): Observable<ApiResponse> {
+    let url = `${this.BASE_URL}UpdatePerson`;
+    return this.http.put<ApiResponse>(url, editPersonRequest);
+  }
+
+  deleteAPerson(id: string): Observable<ApiResponse> {
+    let url = `${this.BASE_URL}DeletePerson/${id}`;
+    return this.http.delete<ApiResponse>(url);
+  }
 }

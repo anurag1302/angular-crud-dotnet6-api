@@ -2,7 +2,12 @@
   <h2 class="mt-3 text-center">
     <u> View a Person </u>
   </h2>
-  <form class="row g-3" #form="ngForm">
+  <form
+    class="row g-3"
+    #form="ngForm"
+    (ngSubmit)="editAPerson()"
+    ngNativeValidate
+  >
     <div class="col-md-6">
       <label for="id" class="form-label">Id</label>
       <input
@@ -20,6 +25,7 @@
         class="form-control"
         id="name"
         name="name"
+        required
         [(ngModel)]="existingPerson.name"
       />
     </div>
@@ -30,6 +36,7 @@
         class="form-control"
         id="phone"
         name="phone"
+        required
         [(ngModel)]="existingPerson.phone"
       />
     </div>
@@ -40,6 +47,7 @@
         class="form-control"
         id="email"
         name="email"
+        required
         [(ngModel)]="existingPerson.email"
       />
     </div>
@@ -49,8 +57,8 @@
         type="text"
         class="form-control"
         id="address"
-        placeholder="1234 Main St"
         name="address"
+        required
         [(ngModel)]="existingPerson.address"
       />
     </div>
@@ -60,8 +68,8 @@
         type="text"
         class="form-control"
         id="postalZip"
-        placeholder="110045"
         name="postalZip"
+        required
         [(ngModel)]="existingPerson.postalZip"
       />
     </div>
@@ -72,12 +80,22 @@
         class="form-control"
         id="country"
         name="country"
+        required
         [(ngModel)]="existingPerson.country"
       />
     </div>
 
-    <div class="col-12">
-      <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="col-md-1">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+    <div class="col-md-1">
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="deletePerson(existingPerson.id)"
+      >
+        Delete
+      </button>
     </div>
   </form>
 </div>
