@@ -25,6 +25,7 @@ namespace PersonsAPI.Controllers
             var persons = await _context.Persons.ToListAsync();
             var model = persons
                 .Select(x => PersonMapper.From(x))
+                .OrderByDescending(x => x.Name)
                 .ToList();
 
             var response = new BaseApiResponse<IReadOnlyList<PersonAPIModel>>
@@ -141,8 +142,8 @@ namespace PersonsAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("DeletePerson")]
-        public async Task<BaseApiResponse<PersonAPIModel>> DeletePerson([FromBody] Guid id)
+        [Route("DeletePerson/{id:Guid}")]
+        public async Task<BaseApiResponse<PersonAPIModel>> DeletePerson([FromRoute] Guid id)
         {
             var model = await _context.Persons
                 .FirstOrDefaultAsync(x => x.Id == id);
