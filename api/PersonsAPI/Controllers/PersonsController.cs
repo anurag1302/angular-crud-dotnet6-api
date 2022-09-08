@@ -40,8 +40,8 @@ namespace PersonsAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetPersonById/{id}")]
-        public async Task<BaseApiResponse<PersonAPIModel>> GetPersonById(Guid id)
+        [Route("GetPersonById/{id:Guid}")]
+        public async Task<BaseApiResponse<PersonAPIModel>> GetPersonById([FromRoute] Guid id)
         {
             var person = await _context.Persons
                 .FirstOrDefaultAsync(x => x.Id == id);
