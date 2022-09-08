@@ -9,17 +9,8 @@ import { PersonService } from 'src/services/person.service';
 })
 export class AppComponent implements OnInit {
   title = 'Persons App';
-  persons: Person[] = [];
 
-  constructor(private personService: PersonService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.getPersons();
-  }
-
-  getPersons() {
-    this.personService.getEmployees().subscribe((response) => {
-      this.persons = response.data;
-    });
-  }
+  ngOnInit(): void {}
 }

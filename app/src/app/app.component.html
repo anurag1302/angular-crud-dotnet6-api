@@ -1,29 +1,12 @@
-<div class="container">
-  <h2>Persons Table</h2>
-  <table class="table table-hover" *ngIf="persons && persons.length > 0">
-    <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Email</th>
-        <!-- <th scope="col">Address</th> -->
-        <th scope="col">Postal Zip</th>
-        <th scope="col">Country</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let person of persons">
-        <td>{{ person.id }}</td>
-        <td>{{ person.name }}</td>
-        <td>{{ person.phone }}</td>
-        <td>{{ person.email }}</td>
-        <!-- <td>{{ person.address }}</td> -->
-        <td>{{ person.postalZip }}</td>
-        <td>{{ person.country }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 *ngIf="!persons || persons.length <= 0"></h3>
-</div>
+<ul class="nav nav-tabs justify-content-center mt-4">
+  <li class="nav-item">
+    <a class="nav-link" routerLink="">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/edit">Edit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/list">List</a>
+  </li>
+</ul>
 <router-outlet></router-outlet>
