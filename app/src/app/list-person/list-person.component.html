@@ -3,6 +3,7 @@
   <table class="table table-hover mt-4" *ngIf="persons && persons.length > 0">
     <thead>
       <tr>
+        <th></th>
         <th scope="col">Id</th>
         <th scope="col">Name</th>
         <th scope="col">Phone</th>
@@ -13,6 +14,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let person of persons">
+        <td>
+          <a routerLink="/edit/{{ person.id }}"
+            ><img
+              title="View"
+              class="view-img"
+              src="./assets/images/e36-128.webp"
+          /></a>
+        </td>
         <td>{{ person.id }}</td>
         <td>{{ person.name }}</td>
         <td>{{ person.phone }}</td>
